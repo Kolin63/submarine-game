@@ -5,6 +5,7 @@
 
 #include "controller.h"
 #include "player.h"
+#include "render.h"
 
 static struct manager* global_manager;
 
@@ -27,6 +28,7 @@ void manager_cleanup() {
 void manager_run_game() {
   while (global_manager->game_should_run) {
     controller_tick();
+    render_game();
   }
 }
 
