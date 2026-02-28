@@ -1,9 +1,13 @@
 #include <raylib.h>
 
-int main() {
-  InitWindow(400, 300, "Submarine Game");
+#include "manager.h"
 
-  while (true) ;
+int main() {
+  manager_init();
+
+  while (true);
+
+  manager_cleanup();
 
   return 0;
 }
