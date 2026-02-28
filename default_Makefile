@@ -1,3 +1,8 @@
+# this is the default Makefile to compile the project
+# the default is the configuration for Windows
+
+# to compile this, copy this file to a file named "Makefile" and make any
+# necessary changes (i was too lazy to make a good configuration script)
 CC := gcc
 CFLAGS := $(CFLAGS) -std=c23 -Wall -Wextra -Wpedantic -MMD -MP
 LDFLAGS := -lraylib -lgdi32 -lwinmm
