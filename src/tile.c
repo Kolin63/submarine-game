@@ -30,6 +30,8 @@ Color tilemap_get_color(TileType type) {
     return (Color){20, 60, 120, 255};
   case TILE_WATER:
     return (Color){90, 90, 90, 255};
+  default:
+    return (Color){255, 0, 255, 255};
   }
 }
 
@@ -51,4 +53,11 @@ void tilemap_draw(const struct tilemap* tm) {
                          (Color){255, 255, 255, 20});
     }
   }
+}
+
+bool isWalkable(const struct tilemap* tm, int tile_x, int tile_y) {
+  if (tile_x < 0 || tile_x >= MAP_WIDTH || tile_y < 0 || tile_y >= MAP_HEIGHT) {
+    return false;
+  }
+  return tm->tiles[tile_y][tile_x] != TILE_ROCK;
 }

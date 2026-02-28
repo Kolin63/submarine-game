@@ -2,6 +2,7 @@
 #define CAMPFIRE_TILE_H
 
 #include <raylib.h>
+#include <stdbool.h>
 
 #define TILE_SIZE 32
 #define MAP_WIDTH 25
@@ -16,5 +17,6 @@ struct tilemap {
 void tilemap_init(struct tilemap* tm);
 void tilemap_draw(const struct tilemap* tm);
 Color tilemap_get_color(TileType type);
+bool isWalkable(const struct tilemap* tm, int tile_x, int tile_y);
 
 #endif

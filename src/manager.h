@@ -1,6 +1,7 @@
 #ifndef CAMPFIRE_MANAGER_H
 #define CAMPFIRE_MANAGER_H
 
+#include "dialog.h"
 #include "player.h"
 #include "tile.h"
 
@@ -8,6 +9,8 @@ struct manager {
   bool game_should_run;
   struct player* player;
   struct tilemap* tilemap;
+  struct dialog_box* dialog;
+  Font font;
 };
 
 void manager_init();

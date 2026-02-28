@@ -2,8 +2,6 @@
 
 #include <raylib.h>
 
-void render_game() {
-  BeginDrawing();
-  ClearBackground(BLACK);
-  EndDrawing();
-}
+#include "manager.h"
+
+void render_game() { manager_draw(); }
