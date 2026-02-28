@@ -4,7 +4,7 @@
 #include "pos.h"
 
 struct player {
-  struct pos pos;
+  struct pos_float pos;
 };
 
 #endif

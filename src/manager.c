@@ -3,8 +3,11 @@
 #include <raylib.h>
 #include <stdlib.h>
 
+#include "controller.h"
 #include "player.h"
+#include "render.h"
 #include "tile.h"
+
 
 static struct manager* global_manager;
 
@@ -39,6 +42,13 @@ void manager_cleanup() {
   free(global_manager->tilemap);
   free(global_manager->player);
   free(global_manager);
+}
+
+void manager_run_game() {
+  while (global_manager->game_should_run) {
+    controller_tick();
+    render_game();
+  }
 }
 
 struct manager* manager_get_global() { return global_manager; }
