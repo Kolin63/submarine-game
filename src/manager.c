@@ -39,23 +39,6 @@ void manager_init() {
   global_manager->game_should_run = true;
 }
 
-void manager_update() { dialog_update(global_manager->dialog, GetFrameTime()); }
-
-void manager_draw() {
-  BeginDrawing();
-  ClearBackground(BLACK);
-
-  tilemap_draw(global_manager->tilemap);
-
-  DrawRectangle(global_manager->player->pos.x * TILE_SIZE + 4,
-                global_manager->player->pos.y * TILE_SIZE + 4, TILE_SIZE - 8,
-                TILE_SIZE - 8, YELLOW);
-
-  dialog_draw(global_manager->dialog);
-
-  EndDrawing();
-}
-
 void manager_cleanup() {
   CloseWindow();
   UnloadFont(global_manager->font);
@@ -68,7 +51,7 @@ void manager_cleanup() {
 void manager_run_game() {
   while (global_manager->game_should_run) {
     controller_tick();
-    manager_update();
+    dialog_update(global_manager->dialog, GetFrameTime());
     render_game();
   }
 }
