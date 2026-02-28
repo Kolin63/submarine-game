@@ -4,9 +4,7 @@
 
 int main() {
   manager_init();
-
-  while (true);
-
+  manager_run_game();
   manager_cleanup();
 
   return 0;
