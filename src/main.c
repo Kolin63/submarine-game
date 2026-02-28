@@ -5,7 +5,10 @@
 int main() {
   manager_init();
 
-  while (true);
+  while (!WindowShouldClose()) {
+    manager_update();
+    manager_draw();
+  }
 
   manager_cleanup();
 

@@ -1,6 +1,6 @@
 CC := gcc
 CFLAGS := $(CFLAGS) -std=c23 -Wall -Wextra -Wpedantic -MMD -MP
-LDFLAGS := -lraylib
+LDFLAGS := -lraylib -lgdi32 -lwinmm
 
 SRC_DIR := src
 BUILD_DIR := build
