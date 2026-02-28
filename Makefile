@@ -1,12 +1,12 @@
-CXX := g++
-CXXFLAGS := $(CXXFLAGS) -std=c++23 -Wall -Wextra -Wpedantic -MMD -MP
-LDFLAGS :=
+CC := gcc
+CFLAGS := $(CFLAGS) -std=c23 -Wall -Wextra -Wpedantic -MMD -MP
+LDFLAGS := -lraylib
 
 SRC_DIR := src
 BUILD_DIR := build
 
-SRCS := $(wildcard $(SRC_DIR)/*.cpp)
-OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRCS))
+SRCS := $(wildcard $(SRC_DIR)/*.c)
+OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 DEPS := $(OBJS:.o=.d)
 
 TARGET := game
@@ -14,11 +14,11 @@ TARGET := game
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 -include $(DEPS)
 
