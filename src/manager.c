@@ -1,6 +1,7 @@
 #include "manager.h"
 
 #include <raylib.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "controller.h"
@@ -40,6 +41,7 @@ void manager_init() {
 }
 
 void manager_cleanup() {
+  printf("Cleaning up...\n");
   CloseWindow();
   UnloadFont(global_manager->font);
   free(global_manager->dialog);
