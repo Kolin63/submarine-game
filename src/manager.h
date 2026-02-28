@@ -1,6 +1,7 @@
 #ifndef CAMPFIRE_MANAGER_H
 #define CAMPFIRE_MANAGER_H
 
+#include "bullet.h"
 #include "dialog.h"
 #include "player.h"
 #include "tile.h"
@@ -11,6 +12,7 @@ struct manager {
   struct tilemap* tilemap;
   struct dialog_box* dialog;
   Font font;
+  struct bullet bullets[MAX_BULLETS];
 };
 
 void manager_init();

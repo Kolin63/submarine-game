@@ -15,8 +15,8 @@ void manager_init() {
   global_manager = malloc(sizeof(struct manager));
   global_manager->game_should_run = true;
   global_manager->player = malloc(sizeof(struct player));
-  global_manager->player->pos.x = 3;
-  global_manager->player->pos.y = 3;
+  global_manager->player->pos.x = 2 * TILE_SIZE;
+  global_manager->player->pos.y = 2 * TILE_SIZE;
 
   global_manager->tilemap = malloc(sizeof(struct tilemap));
   tilemap_init(global_manager->tilemap);
@@ -28,7 +28,6 @@ void manager_init() {
              "Rotten Underground");
   SetTargetFPS(60);
 
-  // Load custom font
   global_manager->font = LoadFont("assets/Jersey15-Regular.ttf");
   global_manager->dialog->font = global_manager->font;
 
@@ -38,6 +37,10 @@ void manager_init() {
   dialog_show(global_manager->dialog, "System", intro, 3);
 
   global_manager->game_should_run = true;
+
+  for (int i = 0; i < MAX_BULLETS; i++) {
+    bullet(&global_manager->bullets[i]);
+  }
 }
 
 void manager_cleanup() {
@@ -52,8 +55,14 @@ void manager_cleanup() {
 
 void manager_run_game() {
   while (global_manager->game_should_run) {
+    float dt = GetFrameTime();
     controller_tick();
-    dialog_update(global_manager->dialog, GetFrameTime());
+    dialog_update(global_manager->dialog, dt);
+
+    for (int i = 0; i < MAX_BULLETS; i++) {
+      bullet_update(&global_manager->bullets[i], dt);
+    }
+
     render_game();
   }
 }
