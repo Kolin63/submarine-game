@@ -35,6 +35,8 @@ void manager_init() {
                                 "Specifically, the 'Rotten Underground'.",
                                 "*you hear a faint scurrying sound*"};
   dialog_show(global_manager->dialog, "System", intro, 3);
+
+  global_manager->game_should_run = true;
 }
 
 void manager_update() { dialog_update(global_manager->dialog, GetFrameTime()); }
