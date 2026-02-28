@@ -6,6 +6,8 @@
 #include "manager.h"
 #include "tile.h"
 
+#define PLAYER_SPEED 1
+
 void controller_tick() {
   struct manager* mgr = manager_get_global();
 
@@ -47,4 +49,17 @@ void controller_tick() {
       p->pos.x = (float)(tx + 1);
     }
   }
+
+  struct player* player = manager_get_global()->player;
+
+  const bool up = IsKeyDown(KEY_W);
+  const bool left = IsKeyDown(KEY_A);
+  const bool down = IsKeyDown(KEY_S);
+  const bool right = IsKeyDown(KEY_D);
+
+  const float velocity_x = right * PLAYER_SPEED - left * PLAYER_SPEED;
+  const float velocity_y = down * PLAYER_SPEED - up * PLAYER_SPEED;
+
+  player->pos.x += velocity_x;
+  player->pos.y += velocity_y;
 }
