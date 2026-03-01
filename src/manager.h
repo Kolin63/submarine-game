@@ -3,6 +3,7 @@
 
 #include "bullet.h"
 #include "dialog.h"
+#include "enemy.h"
 #include "player.h"
 #include "tile.h"
 
@@ -12,7 +13,11 @@ struct manager {
   struct tilemap* tilemap;
   struct dialog_box* dialog;
   Font font;
+  Texture2D player_tex;
+  Texture2D rat_tex;
+  Sound death_snd;
   struct bullet bullets[MAX_BULLETS];
+  struct enemy enemies[MAX_ENEMIES];
 };
 
 void manager_init();

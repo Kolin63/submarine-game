@@ -8,7 +8,7 @@
 #define MAP_WIDTH 25
 #define MAP_HEIGHT 19
 
-typedef enum { TILE_ROCK, TILE_WATER, TILE_COUNT } TileType;
+typedef enum { TILE, TILE_NO, TILE_COUNT } TileType;
 
 struct tilemap {
   TileType tiles[MAP_HEIGHT][MAP_WIDTH];

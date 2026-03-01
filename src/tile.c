@@ -24,10 +24,10 @@ static const TileType default_map[MAP_HEIGHT][MAP_WIDTH] = {
 
 Color tilemap_get_color(TileType type) {
   switch (type) {
-  case TILE_ROCK:
+  case TILE_NO:
+    return (Color){0, 0, 0, 255};
+  case TILE:
     return (Color){21, 61, 121, 255};
-  case TILE_WATER:
-    return (Color){91, 91, 91, 255};
   default:
     return (Color){255, 1, 255, 255};
   }
@@ -54,5 +54,5 @@ bool isWalkable(const struct tilemap* tm, int tile_x, int tile_y) {
   if (tile_x < 0 || tile_x >= MAP_WIDTH || tile_y < 0 || tile_y >= MAP_HEIGHT) {
     return false;
   }
-  return tm->tiles[tile_y][tile_x] != TILE_ROCK;
+  return tm->tiles[tile_y][tile_x] != TILE_NO;
 }

@@ -3,8 +3,10 @@
 #include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "controller.h"
+#include "enemy.h"
 #include "player.h"
 #include "render.h"
 #include "tile.h"
@@ -12,11 +14,12 @@
 static struct manager* global_manager;
 
 void manager_init() {
+  srand(time(NULL));
   global_manager = malloc(sizeof(struct manager));
   global_manager->game_should_run = true;
   global_manager->player = malloc(sizeof(struct player));
-  global_manager->player->pos.x = 2 * TILE_SIZE;
-  global_manager->player->pos.y = 2 * TILE_SIZE;
+  global_manager->player->pos.x = 4 * TILE_SIZE;
+  global_manager->player->pos.y = 4 * TILE_SIZE;
 
   global_manager->tilemap = malloc(sizeof(struct tilemap));
   tilemap_init(global_manager->tilemap);
@@ -31,6 +34,11 @@ void manager_init() {
   global_manager->font = LoadFont("assets/Jersey15-Regular.ttf");
   global_manager->dialog->font = global_manager->font;
 
+  global_manager->player_tex = LoadTexture("assets/player.png");
+  global_manager->rat_tex = LoadTexture("assets/rat.png");
+  InitAudioDevice();
+  global_manager->death_snd = LoadSound("assets/death.mp3");
+
   static const char* intro[] = {"Welcome to the Graywater Subway System.",
                                 "Specifically, the 'Rotten Underground'.",
                                 "*you hear a faint scurrying sound*"};
@@ -41,10 +49,17 @@ void manager_init() {
   for (int i = 0; i < MAX_BULLETS; i++) {
     bullet(&global_manager->bullets[i]);
   }
+
+  enemies_init(global_manager->enemies);
+  enemies_spawn(global_manager->enemies, global_manager->tilemap);
 }
 
 void manager_cleanup() {
   printf("Cleaning up...\n");
+  UnloadTexture(global_manager->player_tex);
+  UnloadTexture(global_manager->rat_tex);
+  UnloadSound(global_manager->death_snd);
+  CloseAudioDevice();
   CloseWindow();
   UnloadFont(global_manager->font);
   free(global_manager->dialog);
@@ -60,7 +75,23 @@ void manager_run_game() {
     dialog_update(global_manager->dialog, dt);
 
     for (int i = 0; i < MAX_BULLETS; i++) {
+      if (!global_manager->bullets[i].active) continue;
       bullet_update(&global_manager->bullets[i], dt);
+
+      // Check collision with enemies
+      for (int j = 0; j < MAX_ENEMIES; j++) {
+        if (!global_manager->enemies[j].active) continue;
+
+        Vector2 enemyCenter = (Vector2){global_manager->enemies[j].pos.x + 8,
+                                        global_manager->enemies[j].pos.y + 8};
+        if (CheckCollisionCircles(global_manager->bullets[i].pos, BULLET_RADIUS,
+                                  enemyCenter, ENEMY_RADIUS)) {
+          PlaySound(global_manager->death_snd);
+          global_manager->bullets[i].active = false;
+          global_manager->enemies[j].active = false;
+          break;
+        }
+      }
     }
 
     render_game();
