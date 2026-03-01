@@ -92,6 +92,12 @@ void manager_run_game() {
           break;
         }
       }
+
+      int tx = (int)(global_manager->bullets[i].pos.x / TILE_SIZE);
+      int ty = (int)(global_manager->bullets[i].pos.y / TILE_SIZE);
+      if (!isWalkable(global_manager->tilemap, tx, ty)) {
+        global_manager->bullets[i].active = false;
+      }
     }
 
     render_game();
